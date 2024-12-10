@@ -9,7 +9,7 @@ import java.io.File;
 public class TestConnector  implements Connector {
     String filePath;
 
-    public void setFilePath(String filePath) {
+    public void setTestFilePath(String filePath) {
         this.filePath = filePath;
     }
 
@@ -21,7 +21,7 @@ public class TestConnector  implements Connector {
             return Jsoup.parse(input, "UTF-8");
         }
         catch (Exception e) {
-            System.out.println(e.getCause().getMessage());
+            System.out.println(e.getMessage());
         }
         return null;
     }
