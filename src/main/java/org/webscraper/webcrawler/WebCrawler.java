@@ -1,4 +1,4 @@
-package org.webscraper.webscraper;
+package org.webscraper.webcrawler;
 
 import java.util.List;
 import java.util.concurrent.*;
@@ -6,7 +6,7 @@ import org.webscraper.Scraper;
 import org.webscraper.concurrentservice.ConcurrentService;
 
 
-public class WebScraper {
+public class WebCrawler {
 
     Scraper scraper;
     ConcurrentService concurrentService;
@@ -15,7 +15,7 @@ public class WebScraper {
     ConcurrentLinkedQueue<String> toScrape = new ConcurrentLinkedQueue<>();
     String topDomain;
 
-    public WebScraper(Scraper scraper, ConcurrentService service, String topDomain) {
+    public WebCrawler(Scraper scraper, ConcurrentService service, String topDomain) {
         this.scraper = scraper;
         concurrentService = service;
         this.topDomain = topDomain;
