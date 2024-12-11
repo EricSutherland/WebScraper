@@ -1,8 +1,7 @@
-package org.webscraper;
+package org.webscraper.connector;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.webscraper.connector.Connector;
 
 import java.io.File;
 

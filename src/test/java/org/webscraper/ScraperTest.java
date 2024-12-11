@@ -3,6 +3,7 @@ package org.webscraper;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.webscraper.connector.TestConnector;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ class ScraperTest {
 
         assertThat(links.size()).isEqualTo(2);
         assertThat(links.get(0)).isEqualTo("https://monzo.com");
-        assertThat(links.get(0)).isEqualTo("https://mondo.monzo.com");
+        assertThat(links.get(1)).isEqualTo("https://mondo.monzo.com");
     }
 
     @DisplayName("""

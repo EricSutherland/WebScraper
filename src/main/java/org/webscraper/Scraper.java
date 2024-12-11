@@ -17,7 +17,7 @@ public class Scraper {
         this.connector = connector;
     }
 
-    List<String> scrape(String url) {
+    public List<String> scrape(String url) {
 
         try {
             Document website = connector.connectToWebsite(url);
@@ -37,9 +37,9 @@ public class Scraper {
 
     private void handleException(String url, Exception e) {
         if(e instanceof ConnectionException) {
-            System.out.printf("Error connecting to website, skipping scrape for: %s", url);
+            System.out.println(String.format("Error connecting to website, skipping scrape for: %s", url));
         } else {
-            System.out.printf("Unknown error occurred: %s", e.getMessage());
+            System.out.println(String.format("Unknown error occurred: %s", e.getMessage()));
             // raise alert to be investigated
         }
     }

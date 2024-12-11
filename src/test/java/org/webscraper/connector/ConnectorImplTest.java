@@ -1,9 +1,7 @@
-package org.webscraper;
+package org.webscraper.connector;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.webscraper.connector.ConnectionException;
-import org.webscraper.connector.ConnectorImpl;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
