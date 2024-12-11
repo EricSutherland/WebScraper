@@ -104,47 +104,47 @@ class WebCrawlerTest {
     }
 
     @DisplayName("""
-        Given filter is called with a value
+        Given newTopDomainUrl is called with a value
         that matches the top domain
         and isn't in found
         the it returns true
         """)
     @Test
-    void testFilterTopDomainMatches() {
+    void testNewTopDomainUrlTopDomainMatches() {
         WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
         );
 
-        assertThat(webCrawler.filter("test2")).isEqualTo(true);
+        assertThat(webCrawler.newTopDomainUrl("test2")).isEqualTo(true);
     }
 
     @DisplayName("""
-        Given filter is called with a value
+        Given newTopDomainUrl is called with a value
         that doesn't match the top domain
         and isn't in found
         the it returns true
         """)
     @Test
-    void testFilterTopDomainDoesntMatches() {
+    void testNewTopDomainUrlTopDomainDoesntMatches() {
         WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
         );
 
-        assertThat(webCrawler.filter("monzo")).isEqualTo(false);
+        assertThat(webCrawler.newTopDomainUrl("monzo")).isEqualTo(false);
     }
 
     @DisplayName("""
-        Given filter is called with a value
+        Given newTopDomainUrl is called with a value
         that matches the top domain
         and is in found
         the it returns true
         """)
     @Test
-    void testFilterAlreadyFound() {
+    void testNewTopDomainUrlAlreadyFound() {
         WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
@@ -155,6 +155,6 @@ class WebCrawlerTest {
         when(scraper.scrape(any())).thenReturn(List.of("test2"));
         webCrawler.evaluateUrl("test2");
 
-        assertThat(webCrawler.filter("test2")).isEqualTo(false);
+        assertThat(webCrawler.newTopDomainUrl("test2")).isEqualTo(false);
     }
 }

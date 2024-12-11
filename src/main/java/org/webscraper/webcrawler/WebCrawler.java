@@ -27,7 +27,6 @@ public class WebCrawler {
         try {
             concurrentService.run(this::mainLoop);
 
-            found.forEach(System.out::println);
             System.out.println(String.format("WebScrape finished, %s found in total", found.size()));
         } catch (Exception e) {
             System.out.println(String.format("WebScrape failed, %s", e.getMessage()));
@@ -50,14 +49,15 @@ public class WebCrawler {
     void evaluateUrl(String newUrl) {
         List<String> newUrlList = scraper.scrape(newUrl)
             .stream()
-            .filter(this::filter)
+            .peek(url -> System.out.println(String.format("found: %s", url)))
+            .filter(this::newTopDomainUrl)
             .toList();
 
         found.addAll(newUrlList);
         toScrape.addAll(newUrlList);
     }
 
-    boolean filter(String link) {
+    boolean newTopDomainUrl(String link) {
         return !found.contains(link)
             && link.startsWith(topDomain);
     }
