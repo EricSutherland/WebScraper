@@ -1,4 +1,4 @@
-package org.webscraper.webscraper;
+package org.webscraper.webcrawler;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +13,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class WebScraperTest {
+class WebCrawlerTest {
 
     ConcurrentService concurrentService = mock(ConcurrentService.class);
 
@@ -26,13 +26,13 @@ class WebScraperTest {
         """)
     @Test
     void testRun() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
         );
 
-        webScraper.run();
+        webCrawler.run();
 
         verify(concurrentService, times(1)).run(any());
         verify(concurrentService, times(1)).shutdown();
@@ -45,7 +45,7 @@ class WebScraperTest {
         """)
     @Test
     void testRunError() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
@@ -53,7 +53,7 @@ class WebScraperTest {
 
         doThrow(RuntimeException.class).when(concurrentService).run(any());
 
-        webScraper.run();
+        webCrawler.run();
 
         verify(concurrentService, times(1)).shutdown();
     }
@@ -66,17 +66,17 @@ class WebScraperTest {
         """)
     @Test
     void testWebScraper() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
         );
 
         when(scraper.scrape(any())).thenReturn(List.of("test2"));
-        webScraper.evaluateUrl("test2"); // increase toScrape to 2
+        webCrawler.evaluateUrl("test2"); // increase toScrape to 2
 
 
-        webScraper.mainLoop();
+        webCrawler.mainLoop();
 
         verify(concurrentService, times(2)).run(any());
     }
@@ -88,7 +88,7 @@ class WebScraperTest {
         """)
     @Test
     void testEvaluateUrl() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
@@ -96,11 +96,11 @@ class WebScraperTest {
 
 
         when(scraper.scrape(any())).thenReturn(List.of("test2"));
-        webScraper.evaluateUrl("test2");
+        webCrawler.evaluateUrl("test2");
 
         List<String> testList = List.of("test", "test2");
-        assertThat(webScraper.getFound().stream().toList()).isEqualTo(testList);
-        assertThat(webScraper.getToScrape().stream().toList()).isEqualTo(testList);
+        assertThat(webCrawler.getFound().stream().toList()).isEqualTo(testList);
+        assertThat(webCrawler.getToScrape().stream().toList()).isEqualTo(testList);
     }
 
     @DisplayName("""
@@ -111,13 +111,13 @@ class WebScraperTest {
         """)
     @Test
     void testFilterTopDomainMatches() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
         );
 
-        assertThat(webScraper.filter("test2")).isEqualTo(true);
+        assertThat(webCrawler.filter("test2")).isEqualTo(true);
     }
 
     @DisplayName("""
@@ -128,13 +128,13 @@ class WebScraperTest {
         """)
     @Test
     void testFilterTopDomainDoesntMatches() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
         );
 
-        assertThat(webScraper.filter("monzo")).isEqualTo(false);
+        assertThat(webCrawler.filter("monzo")).isEqualTo(false);
     }
 
     @DisplayName("""
@@ -145,7 +145,7 @@ class WebScraperTest {
         """)
     @Test
     void testFilterAlreadyFound() {
-        WebScraper webScraper = new WebScraper(
+        WebCrawler webCrawler = new WebCrawler(
             scraper,
             concurrentService,
             "test"
@@ -153,8 +153,8 @@ class WebScraperTest {
 
         // run evaluateUrl to populate found list
         when(scraper.scrape(any())).thenReturn(List.of("test2"));
-        webScraper.evaluateUrl("test2");
+        webCrawler.evaluateUrl("test2");
 
-        assertThat(webScraper.filter("test2")).isEqualTo(false);
+        assertThat(webCrawler.filter("test2")).isEqualTo(false);
     }
 }
